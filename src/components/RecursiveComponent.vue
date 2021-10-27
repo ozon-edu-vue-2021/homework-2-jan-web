@@ -23,6 +23,7 @@
         </li>
     <li v-if="item.type === 'link'"
         class="link-name"
+        @click="selected"
         >
         {{item.name}}
         </li>
