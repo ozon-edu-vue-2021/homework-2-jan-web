@@ -17,6 +17,7 @@
     <li
         v-if="item.type === 'file'"
         class="file-name"
+        @click="selected"
         >
         {{item.name}}
         </li>
@@ -45,6 +46,9 @@ export default {
     changeVisability() {
       this.isVisible = !this.isVisible;
     },
+    selected(e) {
+      e.target.classList.toggle('selected');
+    }
   }
 }
 </script>
@@ -58,6 +62,9 @@ export default {
 }
 .link-name {
   color: blue;
+}
+.selected {
+  color: green;
 }
 
 </style>
