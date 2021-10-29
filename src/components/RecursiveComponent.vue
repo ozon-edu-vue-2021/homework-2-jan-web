@@ -18,10 +18,10 @@
 				/>
 			</div>
 		</ul>
-		<li v-if="item.type === 'file'" :class="fileClasses" @click="selected">
+		<li v-if="item.type === 'file'" :class="fileClasses" @click="selected(item.name)">
 			{{ item.name }}
 		</li>
-		<li v-if="item.type === 'link'" :class="fileClasses" @click="selected">
+		<li v-if="item.type === 'link'" :class="linkClasses" @click="selected(item.name)">
 			{{ item.name }}
 		</li>
 	</div>
@@ -50,8 +50,10 @@ export default {
 	}),
 	computed: {
 		fileClasses() {
-			// console.log('fileClasses this.isFileSelected: ', this.isFileSelected);
 			return ['file-name', { 'selected': this.isSelected}];
+		},
+		linkClasses() {
+			return ['link-name', { 'selected': this.isSelected}];
 		},
 
 	},
@@ -60,12 +62,12 @@ export default {
 			this.isVisible = !this.isVisible;
 			this.isClosed = !this.isClosed;
 		},
-		selected() {
+		selected(name) {
 			this.isSelected = !this.isSelected;
-			this.$emit('file')
+			this.$emit('file', name);
+
 		},
 		fileSelected() {
-      console.log('isFileSelected');
 			this.isSelected = false;
     }
 	},

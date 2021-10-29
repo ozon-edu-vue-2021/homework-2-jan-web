@@ -6,9 +6,10 @@
       <recursive-component
         :item="item"
         :index="index"
-        v-for="(item, index) in Dir.contents"
+        v-for="(item, index) in [...Dir]"
         :key="index"
         :isFileSelected="isFileSelected"
+        @file="fileSelected"
         />
     </div>
   </div>
@@ -26,6 +27,11 @@ export default {
     return {
     isFileSelected: true
     }
+  },
+  methods: {
+     fileSelected() {
+			this.isFileSelected = false;
+    },
   }
 
 }
