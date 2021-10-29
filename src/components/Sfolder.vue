@@ -7,7 +7,10 @@
         :item="item"
         :index="index"
         v-for="(item, index) in Dir.contents"
-        :key="index"/>
+        :key="index"
+        :isFileSelected="isFileSelected"
+         v-on:file-selected="fileSelected()"
+        />
     </div>
   </div>
 </template>
@@ -22,11 +25,13 @@ export default {
   },
   data() {
     return {
-
+    isFileSelected: true
     }
   },
   methods: {
-
+    fileSelected() {
+      console.log('isFileSelected');
+    }
   }
 }
 </script>

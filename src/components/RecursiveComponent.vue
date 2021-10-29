@@ -1,71 +1,90 @@
 <template>
-  <div>
-    <div>
-      <div>
-        <ul v-if="item.contents && item.contents.length > 0">
-          <h3 class="dir-name" @click="changeVisability">folder name: {{ item.name }}</h3>
-          <recursive-component
-            v-for="(child, subIndex) in item.contents"
-            :item="child"
-            :key="subIndex"
-            v-show="isVisible"
-
-            />
-        </ul>
-      </div>
-    </div>
-    <li
-        v-if="item.type === 'file'"
-        class="file-name"
-        @click="selected"
-        >
-        {{item.name}}
-        </li>
-    <li v-if="item.type === 'link'"
-        class="link-name"
-        @click="selected"
-        >
-        {{item.name}}
-        </li>
-
-  </div>
+	<div>
+		<ul v-if="item.contents && item.contents.length > 0">
+			<div class="folder" @click="changeVisability">
+				<icon-closed-folder v-if="isClosed" />
+				<icon-opened-folder v-if="!isClosed" />
+				<h3 class="dir-name">
+					{{ item.name }}
+				</h3>
+			</div>
+			<div v-if="isVisible">
+				<recursive-component
+					v-for="(child, subIndex) in item.contents"
+					:item="child"
+					:key="subIndex"
+					:isFileSelected="isFileSelected"
+				/>
+			</div>
+		</ul>
+		<li v-if="item.type === 'file'" :class="fileClasses" @click="selected">
+			{{ item.name }}
+		</li>
+		<li v-if="item.type === 'link'" :class="fileClasses" @click="selected">
+			{{ item.name }}
+		</li>
+	</div>
 </template>
 <script>
+import IconClosedFolder from "./Icons/IconClosedFolder";
+import IconOpenedFolder from "./Icons/IconOpenedFolder";
 export default {
-  name: "RecursiveComponent",
-  props: {
-    item: {
-      type: [Object, String],
-      required: true
-    },
+	name: "RecursiveComponent",
+	props: {
+		item: {
+			type: [Object, String],
+			required: true,
+		},
+		isFileSelected: {
+			type: Boolean
 
-  },
-    data: () => ({
-      isVisible: false,
-    }),
-  methods: {
-    changeVisability() {
-      this.isVisible = !this.isVisible;
-    },
-    selected(e) {
-      e.target.classList.toggle('selected');
-    }
-  }
-}
+		}
+	},
+	data: () => ({
+		isVisible: false,
+		isClosed: true,
+		isSelected: false,
+
+	}),
+	computed: {
+		fileClasses() {
+			// console.log('fileClasses this.isFileSelected: ', this.isFileSelected);
+			return ['file-name', { 'selected': this.isSelected && this.isFileSelected}];
+		},
+
+	},
+	methods: {
+		changeVisability() {
+			this.isVisible = !this.isVisible;
+			this.isClosed = !this.isClosed;
+		},
+		selected() {
+			this.isSelected = !this.isSelected;
+			this.$emit('file-selected')
+		},
+	},
+	components: {
+		IconClosedFolder,
+		IconOpenedFolder,
+	},
+};
 </script>
 <style scoped>
-
-.dir-name{
-  color: tomato;
+.dir-name {
+	color: tomato;
+	margin-left: 10px;
 }
 .file-name {
-  color: brown;
+	color: brown;
 }
 .link-name {
-  color: blue;
+	color: blue;
 }
 .selected {
-  color: green;
+	color: green;
 }
-
+.folder {
+	display: inline-flex;
+	align-items: center;
+}
 </style>
