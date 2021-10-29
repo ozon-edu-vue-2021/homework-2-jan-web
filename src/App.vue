@@ -25,6 +25,7 @@ export default {
     baseOfDir: json
   }),
 
+
 }
 </script>
 

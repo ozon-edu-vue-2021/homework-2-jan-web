@@ -14,6 +14,7 @@
 					:item="child"
 					:key="subIndex"
 					:isFileSelected="isFileSelected"
+					@file="fileSelected"
 				/>
 			</div>
 		</ul>
@@ -44,12 +45,13 @@ export default {
 		isVisible: false,
 		isClosed: true,
 		isSelected: false,
+		canItSelects: true
 
 	}),
 	computed: {
 		fileClasses() {
 			// console.log('fileClasses this.isFileSelected: ', this.isFileSelected);
-			return ['file-name', { 'selected': this.isSelected && this.isFileSelected}];
+			return ['file-name', { 'selected': this.isSelected}];
 		},
 
 	},
@@ -60,8 +62,12 @@ export default {
 		},
 		selected() {
 			this.isSelected = !this.isSelected;
-			this.$emit('file-selected')
+			this.$emit('file')
 		},
+		fileSelected() {
+      console.log('isFileSelected');
+			this.isSelected = false;
+    }
 	},
 	components: {
 		IconClosedFolder,
