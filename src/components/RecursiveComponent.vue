@@ -68,7 +68,9 @@ export default {
 
 		},
 		fileSelected() {
-			this.isSelected = false;
+      this.$emit('file', name);
+
+      this.isSelected = false;
     }
 	},
 	components: {

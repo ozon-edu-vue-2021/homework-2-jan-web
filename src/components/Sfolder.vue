@@ -1,8 +1,6 @@
 <template>
   <div>
-
     <div>
-
       <recursive-component
         :item="item"
         :index="index"
@@ -30,7 +28,8 @@ export default {
   },
   methods: {
      fileSelected() {
-			this.isFileSelected = false;
+       console.log('selected')
+       this.isFileSelected = false;
     },
   }
 
