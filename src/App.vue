@@ -1,18 +1,31 @@
+
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <div class="wrapper">
+              <sfolder
+                :Dir="baseOfDir"
+                />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import json from '../public/static/node_modules.json';
+import Sfolder from './components/Sfolder';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Sfolder
+  },
+  data: () => ({
+    baseOfDir: json
+  }),
+
+
 }
 </script>
 
@@ -21,7 +34,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
